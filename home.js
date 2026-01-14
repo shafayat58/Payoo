@@ -1,3 +1,8 @@
+
+const TransactionData = [];
+
+
+
 // --- Add Money ---
 document.getElementById("add-money-submit").addEventListener('click', function (event) {
   event.preventDefault();
@@ -20,6 +25,14 @@ document.getElementById("add-money-submit").addEventListener('click', function (
   const AvailableBalance = parseInt(document.getElementById('available-balance').innerText);
   const updateAmount = AvailableBalance + AddAmount;
   document.getElementById('available-balance').innerText = updateAmount;
+  const Data = {
+    name: 'Add Money',
+    date:new Date().toLocaleTimeString()
+  }
+  TransactionData.push(Data)
+  // console.log(TransactionData);
+  
+
 });
 
 // --- Cash Out ---
@@ -44,6 +57,11 @@ document.getElementById("cashout-submit").addEventListener('click', function (ev
   const AvailableBalance = parseInt(document.getElementById('available-balance').innerText.replace(',', ''));
   const updateAmount = AvailableBalance - WithdrawAmount;
   document.getElementById('available-balance').innerText = updateAmount;
+  const Data = {
+    name: 'Cash Out',
+    date: new Date().toLocaleTimeString()
+  }
+  TransactionData.push(Data)
 });
 
 // --- Transfer Money ---
@@ -67,6 +85,11 @@ document.getElementById("transfer-submit").addEventListener('click', function (e
   const AvailableBalance = parseInt(document.getElementById('available-balance').innerText);
   const updateAmount = AvailableBalance - TransferAmount;
   document.getElementById('available-balance').innerText = updateAmount;
+  const Data = {
+    name: 'Transfer Money',
+    date: new Date().toLocaleTimeString()
+  }
+  TransactionData.push(Data)
 });
 
 // --- Get Bonus ---
@@ -81,6 +104,11 @@ document.getElementById("bonus-submit").addEventListener('click', function (even
   }
 
   alert('Bonus applied successfully!');
+  const Data = {
+    name: 'Get Bonus',
+    date: new Date().toLocaleTimeString()
+  }
+  TransactionData.push(Data)
 });
 
 // --- Pay Bill ---
@@ -105,6 +133,11 @@ document.getElementById("paybill-submit").addEventListener('click', function (ev
   const AvailableBalance = parseInt(document.getElementById('available-balance').innerText);
   const updateAmount = AvailableBalance - PayAmount;
   document.getElementById('available-balance').innerText = updateAmount;
+  const Data = {
+    name: 'Pay Bill',
+    date: new Date().toLocaleTimeString()
+  }
+  TransactionData.push(Data)
 });
 
 
@@ -359,6 +392,42 @@ document.getElementById("transaction-card").addEventListener('click', function (
     event.preventDefault()
     document.getElementById('transaction-section').style.display = 'block';
 
+  })
+
+
+
+  document.getElementById('transaction-card').addEventListener('click', function () {
+    
+    const transactionContainer = document.getElementById('transactionContainer');
+    // console.log(TransactionData);
+    transactionContainer.innerText = "";
+
+    for (const data of TransactionData) {
+      const div = document.createElement('div');
+
+      div.className = "flex justify-between items-center mt-3";
+
+      div.innerHTML = `
+    <!-- Left side -->
+    <div class="flex items-center gap-3">
+      <img src="./assets/wallet1.png"
+           class="h-[50px] w-[50px] rounded-full p-3 bg-gray-100">
+
+      <div>
+        <p class="font-semibold">${data.name}</p>
+        <p class="text-sm text-gray-500">${data.date}</p>
+      </div>
+    </div>
+
+    <!-- Right side dot -->
+    <i class="fa-solid fa-ellipsis-vertical text-xl cursor-pointer"></i>
+  `;
+
+      transactionContainer.appendChild(div);
+    }
+
+    
+       
   })
 
 
